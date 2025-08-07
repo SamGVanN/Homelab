@@ -90,9 +90,9 @@ echo "=== SAUVEGARDE TERMINÉE ===" | tee -a "$LOGFILE"
 
 
 # === SUPPRESSION DES SAUVEGARDES LES PLUS ANCIENNES ===
-echo "Nettoyage des anciennes sauvegardes (conservation des $KEEP plus récentes)..."
+echo "Nettoyage des anciennes sauvegardes (conservation des $KEEP plus récentes)..." | tee -a "$LOGFILE"
 cd "$BACKUP_ROOT" || exit 1
-ls -1dt backup-* | tail -n +$((KEEP + 1)) | while read old; do
-    echo "Suppression de : $old"
+ls -1d backup-* | sort -r | tail -n +$((KEEP + 1)) | while read old; do
+    echo "Suppression de : $old" | tee -a "$LOGFILE"
     rm -rf "$old"
 done
