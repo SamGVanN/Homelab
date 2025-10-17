@@ -73,7 +73,7 @@ source ~/.bashrc
 
 ---
 
-## ✅ Tu peux maintenant exécuter :
+## Tu peux maintenant exécuter :
 
 ```bash
 backupserver
@@ -84,7 +84,7 @@ backupserver
 
 ## **ℹ️ Procédure sécurisée** pour débrancher un disque dur externe
 
-## ✅ 1. S’assurer qu’aucun processus n’utilise le disque
+## 1. S’assurer qu’aucun processus n’utilise le disque
 
 Pour voir ce qui utilise le point de montage `/mnt/backup` :
 
@@ -99,7 +99,7 @@ Si rien n’est affiché, on peut débrancher le disque externe.
 
 ---
 
-## ✅ 2. Démonter proprement le disque
+## 2. Démonter proprement le disque
 
 ```bash
 sudo umount /mnt/backup
@@ -117,7 +117,7 @@ sudo umount -l /mnt/backup
 
 ---
 
-## 🔁 Optionnel : forcer le démontage (⚠️ à utiliser avec précaution)
+## Optionnel : forcer le démontage (⚠️ à utiliser avec précaution)
 
 Si jamais le disque refuse de se démonter et tu es sûr que rien ne l’utilise :
 
@@ -129,13 +129,13 @@ sudo umount -l /mnt/backup
 
 ---
 
-## ✅ 3. Une fois démonté, tu peux débrancher le disque USB
+## 3. Une fois démonté, tu peux débrancher le disque USB
 
 Tu peux maintenant retirer ton disque externe sans risque.
 
 ---
 
-## ✅ Tu veux vérifier si le disque est bien démonté ?
+## Tu veux vérifier si le disque est bien démonté ?
 
 ```bash
 mount | grep /mnt/backup
