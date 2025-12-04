@@ -19,15 +19,16 @@ This server runs on an **old desktop tower** I repurposed for self-hosting.
 
 Here are the main services currently running:
 
-| Category          | Tools / Software                                                                   |
-|-------------------|-------------------------------------------------------------------------------------|
-| **Networking**     | [Pi-hole](https://pi-hole.net/) – DNS-based ad blocking                           |
-| **Web Interface**  | [CasaOS](https://www.casaos.io/) – Simple UI for managing containers               |
-| **Reverse Proxy**  | [Nginx Proxy Manager](https://nginxproxymanager.com/) – External access management |
-| **Streaming Stack**| Prowlarr, Radarr, Sonarr, Bazarr, Jellyfin, Jellyseer                                                |
-| **Downloads**      | [qBittorrent](https://www.qbittorrent.org/), [SABnzbd](https://sabnzbd.org/)       |
-| **Recipes**        | [Mealie](https://hay-kot.github.io/mealie/) – Recipe manager                      |
-| **Documents**      | [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx) – Digital archiving|
+| Category           | Tools / Software                                                                    |
+|--------------------|-------------------------------------------------------------------------------------|
+| **Networking**     | [Pi-hole](https://pi-hole.net/) – DNS-based ad blocking                             |
+| **Web Interface**  | [CasaOS](https://www.casaos.io/) – Simple UI for managing containers                |
+| **Reverse Proxy**  | [Nginx Proxy Manager](https://nginxproxymanager.com/) – External access management  |
+| **Streaming Stack**| Prowlarr, Radarr, Sonarr, Bazarr, Jellyfin, Jellyseer                               |
+| **Downloads**      | [qBittorrent](https://www.qbittorrent.org/), [SABnzbd](https://sabnzbd.org/)        |
+| **Recipes**        | [Mealie](https://hay-kot.github.io/mealie/) – Recipe manager                        |
+| **Documents**      | [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx) – Digital archiving |
+| **Cloud**          | [Nextcloud](https://github.com/nextcloud) – Cloud server                            |
 
 ---
 
