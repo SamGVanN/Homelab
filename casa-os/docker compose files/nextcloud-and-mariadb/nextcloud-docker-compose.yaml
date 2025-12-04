@@ -1,0 +1,69 @@
+name: linuxserver-nextcloud
+services:
+  app:
+    cpu_shares: 90
+    container_name: nextcloud
+    deploy:
+      resources:
+        limits:
+          memory: 7825M
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=Etc/UTC
+    image: linuxserver/nextcloud:32.0.2
+    labels:
+      icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/nextcloud-icon.png
+    ports:
+      - target: 80
+        published: "82"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/nextcloud/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/nextcloud/config
+        target: /data
+    devices: []
+    cap_add: []
+    command: []
+    network_mode: bridge
+    privileged: false
+    hostname: nextcloud
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: WisdomSky
+  category: LinuxServer.io
+  description:
+    en_us: Nextcloud gives you access to all your files wherever you are. Where are
+      your photos and documents? With Nextcloud you pick a server of your
+      choice, at home, in a data center or at a provider. And that is where your
+      files will be. Nextcloud runs on that server, protecting your data and
+      giving you access from your desktop or mobile devices. Through Nextcloud
+      you also access, sync and share your existing data on that FTP drive at
+      the office, a Dropbox or a NAS you have at home.
+  developer: LinuxServer.io
+  hostname: 192.168.1.100
+  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/nextcloud-icon.png
+  index: /
+  is_uncontrolled: false
+  main: app
+  port_map: "82"
+  scheme: http
+  store_app_id: linuxserver-nextcloud
+  tagline:
+    en_us: Gives you access to all your files wherever you are. Where are your
+      photos and documents. With Nextcloud you pick a server of your choice, at
+      home, in a data center or at a provider. And that is where your files will
+      be. Nextcloud runs on that server, protecting your data and giving you
+      access from your desktop or mobile devices. Through Nextcloud you also
+      access, sync and share your existing data on that FTP drive at the office,
+      a Dropbox or a NAS you have at home.
+  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/nextcloud-icon.png
+  title:
+    custom: ""
+    en_us: Nextcloud

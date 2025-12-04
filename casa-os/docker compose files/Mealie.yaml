@@ -1,0 +1,67 @@
+name: big-bear-mealie
+services:
+  app:
+    cpu_shares: 10
+    command: []
+    container_name: big-bear-mealie
+    deploy:
+      resources:
+        limits:
+          memory: 7826M
+    hostname: big-bear-mealie
+    image: hkotel/mealie:v3.4.0
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/mealie.png
+    ports:
+      - mode: ingress
+        target: 9000
+        published: "9925"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mealie/data
+        target: /app/data
+        bind:
+          create_host_path: true
+    devices: []
+    cap_add: []
+    environment: []
+    networks:
+      - default
+    privileged: false
+networks:
+  default:
+    name: big-bear-mealie_default
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: BigBearTechWorld
+  category: BigBearCasaOS
+  description:
+    en_us: Mealie is a self hosted recipe manager and meal planner with a RestAPI
+      backend and a reactive frontend application built in Vue for a pleasant
+      user experience for the whole family. Easily add recipes into your
+      database by providing the url and mealie will automatically import the
+      relevant data or add a family recipe with the UI editor
+  developer: mealie-recipes
+  hostname: ""
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/mealie.png
+  index: /
+  is_uncontrolled: false
+  main: app
+  port_map: "9925"
+  scheme: http
+  store_app_id: big-bear-mealie
+  tagline:
+    en_us: Mealie
+  thumbnail: ""
+  tips:
+    before_install:
+      en_us: >
+        Read this:
+        https://community.bigbeartechworld.com/t/added-mealie-to-bigbearcasaos/587
+  title:
+    custom: ""
+    en_us: Mealie

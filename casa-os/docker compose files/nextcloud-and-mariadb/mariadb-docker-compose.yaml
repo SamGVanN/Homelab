@@ -24,7 +24,7 @@ services:
       # MYSQL_DATABASE sets the name of a database to be created on image startup (optional).
       - MYSQL_DATABASE=nextcloud
       # MYSQL_USER & MYSQL_PASSWORD are used to create a new user (optional).
-      - MYSQL_USER=samuel
+      - MYSQL_USER=username
       - MYSQL_PASSWORD=password
       # REMOTE_SQL allows linking to a remote SQL server (optional).
       - REMOTE_SQL=

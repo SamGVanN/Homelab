@@ -1,0 +1,88 @@
+name: linuxserver-qbittorrent
+services:
+  app:
+    cpu_shares: 90
+    command: []
+    container_name: qbittorrent
+    deploy:
+      resources:
+        limits:
+          memory: 7826M
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TORRENTING_PORT=
+      - TZ=Europe/Paris
+      - WEBUI_PORT=8181
+    hostname: qbittorrent
+    image: linuxserver/qbittorrent:latest
+    labels:
+      icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/qbittorrent-icon.png
+    ports:
+      - target: 6881
+        published: "6881"
+        protocol: tcp
+      - target: 6881
+        published: "6881"
+        protocol: udp
+      - target: 8181
+        published: "8181"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /srv/lsio/qbittorrent/config
+        target: /config
+      - type: bind
+        source: /home/homelab/downloads/torrent
+        target: /data/downloads/torrent
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: Run 'id [USER]' for the owner of the host volume directories to get the
+              UID to use here.
+        - container: PGID
+          description:
+            en_us: Run 'id [USER]' for the owner of the host volume directories to get the
+              GID to use here.
+        - container: TZ
+          description:
+            en_us: specify a timezone to use, see this list.
+        - container: WEBUI_PORT
+          description:
+            en_us: for changing the port of the web UI, see below for explanation
+        - container: TORRENTING_PORT
+          description:
+            en_us: for changing the port of tcp/udp connection, see below for explanation
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: WisdomSky
+  category: LinuxServer.io
+  description:
+    en_us: The Qbittorrent project aims to provide an open-source software
+      alternative to µTorrent. qBittorrent is based on the Qt toolkit and
+      libtorrent-rasterbar library.
+  developer: LinuxServer.io
+  hostname: ""
+  icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/qbittorrent-icon.png
+  index: ""
+  is_uncontrolled: false
+  main: app
+  port_map: "8181"
+  scheme: http
+  store_app_id: linuxserver-qbittorrent
+  tagline:
+    en_us: The Qbittorrent project aims to provide an open-source software
+      alternative to µTorrent. QBittorrent is based on the Qt toolkit and
+      libtorrent-rasterbar library.
+  thumbnail: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/qbittorrent-icon.png
+  title:
+    custom: Qbittorrent
+    en_us: Qbittorrent

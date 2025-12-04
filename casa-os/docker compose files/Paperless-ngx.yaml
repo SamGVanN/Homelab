@@ -1,0 +1,200 @@
+name: big-bear-paperless-ngx
+services:
+  big-bear-paperless-ngx:
+    cpu_shares: 90
+    command: []
+    container_name: big-bear-paperless-ngx
+    depends_on:
+      big-bear-paperless-ngx-broker:
+        condition: service_started
+        required: true
+      big-bear-paperless-ngx-db:
+        condition: service_started
+        required: true
+    deploy:
+      resources:
+        limits:
+          memory: 7826M
+    environment:
+      - COMPOSE_PROJECT_NAME=big-bear-paperless-ngx
+      - PAPERLESS_ADMIN_PASSWORD=password
+      - PAPERLESS_ADMIN_USER=username
+      - PAPERLESS_CSRF_TRUSTED_ORIGINS=http://192.168.1.100:8001
+      - PAPERLESS_DBHOST=big-bear-paperless-ngx-db
+      - PAPERLESS_DBPASS=c6e74adb-3fce-4318-b657-4bdc0858fcac
+      - PAPERLESS_DBUSER=bigbear
+      - PAPERLESS_REDIS=redis://big-bear-paperless-ngx-broker:6379
+      - PAPERLESS_TIKA_ENABLED=true
+      - PAPERLESS_TIKA_ENDPOINT=http://big-bear-paperless-ngx-tika:9998
+      - PAPERLESS_TIKA_GOTENBERG_ENDPOINT=http://big-bear-paperless-ngx-gotenberg:3000
+      - PAPERLESS_URL=http://192.168.1.100:8001
+    hostname: big-bear-paperless-ngx
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.17.1
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/paperless-ngx.png
+    ports:
+      - mode: ingress
+        target: 8000
+        published: "8001"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/big-bear-paperless-ngx/paperless_data
+        target: /usr/src/paperless/data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/big-bear-paperless-ngx/paperless_media
+        target: /usr/src/paperless/media
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/big-bear-paperless-ngx/paperless_export
+        target: /usr/src/paperless/export
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/big-bear-paperless-ngx/paperless_consume
+        target: /usr/src/paperless/consume
+        bind:
+          create_host_path: true
+    devices: []
+    cap_add: []
+    networks:
+      - big-bear-paperless-ngx-network
+    privileged: false
+  big-bear-paperless-ngx-broker:
+    cpu_shares: 90
+    command: []
+    container_name: big-bear-paperless-ngx-broker
+    deploy:
+      resources:
+        limits:
+          memory: 7826M
+    hostname: big-bear-paperless-ngx-broker
+    image: docker.io/library/redis:8
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/paperless-ngx.png
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/big-bear-paperless-ngx/redis
+        target: /data
+        bind:
+          create_host_path: true
+    ports: []
+    devices: []
+    cap_add: []
+    environment: []
+    networks:
+      - big-bear-paperless-ngx-network
+    privileged: false
+  big-bear-paperless-ngx-db:
+    cpu_shares: 90
+    command: []
+    container_name: big-bear-paperless-ngx-db
+    deploy:
+      resources:
+        limits:
+          memory: 7826M
+    environment:
+      - POSTGRES_DB=paperless
+      - POSTGRES_PASSWORD=c6e74adb-3fce-4318-b657-4bdc0858fcac
+      - POSTGRES_USER=bigbear
+    hostname: big-bear-paperless-ngx-db
+    image: library/postgres:16
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/paperless-ngx.png
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/big-bear-paperless-ngx/postgres
+        target: /var/lib/postgresql/data
+        bind:
+          create_host_path: true
+    ports: []
+    devices: []
+    cap_add: []
+    networks:
+      - big-bear-paperless-ngx-network
+    privileged: false
+  big-bear-paperless-ngx-gotenberg:
+    cpu_shares: 90
+    command:
+      - gotenberg
+      - --chromium-disable-javascript=true
+      - --chromium-allow-list=file:///tmp/.*
+    container_name: big-bear-paperless-ngx-gotenberg
+    deploy:
+      resources:
+        limits:
+          memory: 7826M
+    hostname: big-bear-paperless-ngx-gotenberg
+    image: gotenberg/gotenberg:8.21
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/paperless-ngx.png
+    restart: unless-stopped
+    ports: []
+    volumes: []
+    devices: []
+    cap_add: []
+    environment: []
+    networks:
+      - big-bear-paperless-ngx-network
+    privileged: false
+  big-bear-paperless-ngx-tika:
+    cpu_shares: 90
+    command: []
+    container_name: big-bear-paperless-ngx-tika
+    deploy:
+      resources:
+        limits:
+          memory: 7826M
+    hostname: big-bear-paperless-ngx-tika
+    image: ghcr.io/paperless-ngx/tika:2.9.1-minimal
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/paperless-ngx.png
+    restart: unless-stopped
+    ports: []
+    volumes: []
+    devices: []
+    cap_add: []
+    environment: []
+    networks:
+      - big-bear-paperless-ngx-network
+    privileged: false
+networks:
+  big-bear-paperless-ngx-network:
+    name: big-bear-paperless-ngx_big-bear-paperless-ngx-network
+    driver: bridge
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: BigBearTechWorld
+  category: BigBearCasaOS
+  description:
+    en_us: Paperless-ngx is a community-supported open-source document management
+      system that transforms your physical documents into a searchable online
+      archive so you can keep, well, less paper.
+  developer: paperless-ngx
+  hostname: ""
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/paperless-ngx.png
+  index: /
+  is_uncontrolled: false
+  main: big-bear-paperless-ngx
+  port_map: "8001"
+  scheme: http
+  store_app_id: big-bear-paperless-ngx
+  tagline:
+    en_us: Paperless-ngx
+  thumbnail: ""
+  tips:
+    before_install:
+      en_us: >
+        Read this before installing:
+        https://community.bigbeartechworld.com/t/added-paperlessngx-to-bigbearcasaos/1954#p-3625-documentation-4
+  title:
+    custom: ""
+    en_us: Paperless-ngx
