@@ -29,8 +29,8 @@ services:
 
     # The 'ports' key maps ports on the host to ports in the container.
     ports:
-      # Map port 82 on the host to port 443 inside the container.
-      - 82:443
+      # Map port 82 on the host to port 82 inside the container.
+      - 82:82
 
     # The 'restart' key specifies the restart policy for the container.
     restart: unless-stopped
