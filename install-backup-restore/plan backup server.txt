@@ -1,0 +1,25 @@
+based on backup-homelab_old.sh (I just renamed it _old) adapt the backup script to be compatible with my new "architectuire" :
+/mnt/Storage on casaOs holds
+- a directory /DATA : the casaOS /DATA directory with /AppData and /Media etc
+- a directory /backup : destination folder of the backup we are going to create/restore
+
+The previous backup script was using an external hdd. and copied a lot of stuff, maybe too much.
+Now that I am using the /mnt/Storage  hard drive and using symlink between its /DATA and the /DATA of casaOS used by the containers,
+we no longer need to backup the enitre casaOS /DATA directory
+(because if I wipe the ubuntu or mess with casaOS, I can just replug the /DATA after install to the /mnt/Storage/DATA).
+
+In the mnt/Storage/DATA we need to backup the /AppData only (and not the /Media if it was the case)
+
+I need a script to backup:
+1) the /mnt/Storage/DATA/AppData into /mnt/Storage/backup/DATA/AppData
+2) the / (root) into /mnt/Storage/backup/homelab (do you suggest a better directory name ?)
+
+And a second scrypt that would :
+1) restore the /home and /srv folder from /mnt/Storage/backup/homelab into / (root) of the server
+2) restore the /backup/DATA/AppData into the mnt/Storage/DATA/AppData
+	- step 2 need some rules, help me identify good practices here:
+	- do not copy file if it already exists
+
+For those I suggest we use rsync.
+The backup needs to be executed by cron every sunday to monday nigh (so every monday at 5am is good choice)
+so when backup script is finish, create a new .mùd file with instructions to save the script in the server and the comand for the cron
