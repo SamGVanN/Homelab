@@ -1,0 +1,59 @@
+
+
+les fichiers temporaires de download de torrent et sabnzbd doivent rester sur le nvme pour rester plus rapide
+DONC c'est  bien qu'ils restent sur /home/homelab/downloads
+
+ce sont sonarr et radarr qui vont chercher dans /home/homelab/downloads
+et déplacent vers /DATA/Media  (en réalité /mnt/Storage/DATA/Media grâce au symbolic link)
+
+
+------------------------------------------------------
+
+Au lieu d'un symlink sur /DATA , il faut seulement symlink le /DATA/Media depuis /mnt/Storage/DATA/Media
+donc dans l'ordre il faut
+---------------------------
+--> se positionner au / de ubuntu
+cd .. (2 fois)
+vérifier avec pwd
+---------------------------
+1) stop les containers
+
+2) casser le symlink actuel sur /DATA+ Créer le nouveau dossier /DATA (rsync est censé le faire mais histoire de.. vu que étape 6 chown autant le faire là)
+sudo rm /DATA
+sudo mkdir /DATA
+
+3-A) Copier avec rsync de mnt/Storage/DATA vers /DATA mais pas copier mnt/Storage/DATA/Media
+
+OPTION 1:
+# Copie TOUT le contenu de /mnt/Storage/DATA/ SAUF le dossier Media 
+# vers le nouveau dossier /DATA (sur le SSD)
+sudo rsync -avP --exclude 'Media' /mnt/Storage/DATA/ /DATA/
+-----
+OPTION 2:
+#Faire une copie par dossier:
+	sudo rsync -avP /mnt/Storage/DATA/AppData /DATA/AppData
+	sudo rsync -avP /mnt/Storage/DATA/Documents /DATA/Documents
+	etc
+-----
+	
+3-B) Aller voir dans les dossier /DATA que c'est bien comme on veut et pas /DATA/DATA
+sinon faut déplacer /DATA/DATA dans /DATA avec la commande mv
+
+4) créer un dossier /DATA/Media (vide, il sera symlink vers le /mnt/Storage/DATA/Media)
+sudo mkdir /DATA/Media
+
+5) sudo ln -s /mnt/Storage/DATA/Media /DATA/Media
+
+6) sudo chown -R 1000:1000 /DATA
+
+7) Relancer les containers
+
+8) sudo pihole reloaddns
+
+9) si pas encore fait :
+Ajouter un /mnt/Storage/DATA/AppData/Storage que les containers stockant bcp de donnée doivent utiliser comme /data (exemple aprfait : nexcloud)
+Et faire un symlink entre /mnt/Storage/DATA/AppData/Storage et /DATA/Appdata/container/Data
+
+
+10) MAJ le "plan backup server"
+car du coup il devra backup /DATA/AppData du server vers /mnt/Storage/backup/homelab/DATA/AppData
