@@ -24,7 +24,7 @@ services:
       # MYSQL_DATABASE sets the name of a database to be created on image startup (optional).
       - MYSQL_DATABASE=nextcloud
       # MYSQL_USER & MYSQL_PASSWORD are used to create a new user (optional).
-      - MYSQL_USER=username
+      - MYSQL_USER=nextcloud
       - MYSQL_PASSWORD=password
       # REMOTE_SQL allows linking to a remote SQL server (optional).
       - REMOTE_SQL=
@@ -32,7 +32,7 @@ services:
     # The 'volumes' key maps paths on the host to paths in the container.
     volumes:
       # Map '/DATA/AppData/nextcloud-mariadb' on the host to '/config' inside the container.
-      - /DATA/AppData/nextcloud-mariadb:/config
+      - /DATA/AppData/nextcloud-mariadb/config:/config
 
     # The 'ports' key maps ports on the host to ports in the container.
     ports:

@@ -24,7 +24,7 @@ services:
         source: /DATA/AppData/nextcloud/config
         target: /config
       - type: bind
-        source: /DATA/AppData/nextcloud/data
+        source: /DATA/AppData/ExternalStorage/nextcloud/data
         target: /data
     devices: []
     cap_add: []
