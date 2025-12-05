@@ -59,6 +59,9 @@ else
     exit 1
 fi
 
+#Création du lien pour les /data "lourd" des containers, par exemple nextcloud
+sudo ln -s /mnt/Storage/DATA/AppData/Storage /DATA/AppData/ExternalStorage
+
 # --- Réajustement des Permissions (Sécurité) ---
 # Ceci garantit que CasaOS (UID/GID 1000) peut lire/écrire sur le disque
 echo "Réajustement des permissions du répertoire de données principal..."
